@@ -21,7 +21,6 @@ namespace DotnetCoreSession.Controllers
 
 
             // Store Complex data in session
-
            List<User> _users = new List<User>()
            {
                new User() 
@@ -33,14 +32,27 @@ namespace DotnetCoreSession.Controllers
                }
            };
 
+            // Set data
             SessionHelper.SetObjectAsJson(HttpContext.Session,"User", _users);
-
-            List<User> _sessionList = SessionHelper.GetObjectFromJson<List<User>>(HttpContext.Session, "User"); ;
-
-            ViewBag.UserList = _sessionList;
+            // Get Data
+            ViewBag.UserList = SessionHelper.GetObjectFromJson<List<User>>(HttpContext.Session, "User"); ;
 
 
             return View();
         }
+
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Remove("User");
+            return View();
+        }
+
+        //public IActionResult Logout()
+        //{
+        //    HttpContext.Session.Clear();
+        //    HttpContext.SignOutAsync();
+        //    return View();
+        //}
+
     }
 }
